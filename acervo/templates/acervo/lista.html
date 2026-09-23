@@ -4,7 +4,7 @@
     <h1>Acervo</h1>
 
     <form method="get" class="filtro-form">
-        <input type="text" name="q" placeholder="Buscar por título..." value="{{ request.GET.q }}">
+        <input type="text" name="q" placeholder="Buscar por título ou autor" value="{{ request.GET.q }}">
         <select name="status">
             <option value="" {% if not request.GET.status %}selected{% endif %}>Todos</option>
             <option value="disponivel" {% if request.GET.status == 'disponivel' %}selected{% endif %}>Disponíveis</option>

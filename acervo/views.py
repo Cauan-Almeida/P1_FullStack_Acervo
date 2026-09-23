@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.db.models import Q
 from .models import Livro
 from .forms import LivroForm
 
@@ -11,15 +12,17 @@ def lista_livros(request):
     q = request.GET.get('q')
     status = request.GET.get('status')
 
-    livros = Livro.objects.all()
+    filtro = Q()
 
     if q and q.strip():
-        livros = livros.filter(titulo__icontains=q.strip())
+        filtro &= (Q(titulo__icontains=q.strip()) | Q(autor__icontains=q.strip()))
 
     if status == 'disponivel':
-        livros = livros.filter(disponivel=True)
+        filtro &= Q(disponivel=True)
     elif status == 'emprestado':
-        livros = livros.filter(disponivel=False)
+        filtro &= Q(disponivel=False)
+
+    livros = Livro.objects.filter(filtro).order_by('titulo')
 
     tem_filtro = bool((q and q.strip()) or status in ['disponivel', 'emprestado'])
 
