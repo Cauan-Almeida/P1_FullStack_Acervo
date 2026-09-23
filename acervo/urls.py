@@ -16,5 +16,15 @@ urlpatterns = [
         'cadastrar/',
         views.novo_livro,
         name='cadastrar'
+    ),
+    path(
+        'livros/<int:pk>/editar/',
+        views.editar_livro,
+        name='editar'
+    ),
+    path(
+        'livros/<int:pk>/excluir/',
+        views.excluir_livro,
+        name='excluir'
     )
 ]
