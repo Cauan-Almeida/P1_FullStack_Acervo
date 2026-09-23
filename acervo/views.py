@@ -8,10 +8,27 @@ def inicio(request):
 
 
 def lista_livros(request):
+    q = request.GET.get('q')
+    status = request.GET.get('status')
+
     livros = Livro.objects.all()
+
+    if q and q.strip():
+        livros = livros.filter(titulo__icontains=q.strip())
+
+    if status == 'disponivel':
+        livros = livros.filter(disponivel=True)
+    elif status == 'emprestado':
+        livros = livros.filter(disponivel=False)
+
+    tem_filtro = bool((q and q.strip()) or status in ['disponivel', 'emprestado'])
+
     return render(
         request, 'acervo/lista.html',
-        {'livros': livros}
+        {
+            'livros': livros,
+            'tem_filtro': tem_filtro
+        }
     )
 
 def novo_livro(request):

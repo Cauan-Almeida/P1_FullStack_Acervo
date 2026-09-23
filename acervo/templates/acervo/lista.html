@@ -2,6 +2,18 @@
 
 {% block conteudo %}
     <h1>Acervo</h1>
+
+    <form method="get" class="filtro-form">
+        <input type="text" name="q" placeholder="Buscar por título..." value="{{ request.GET.q }}">
+        <select name="status">
+            <option value="" {% if not request.GET.status %}selected{% endif %}>Todos</option>
+            <option value="disponivel" {% if request.GET.status == 'disponivel' %}selected{% endif %}>Disponíveis</option>
+            <option value="emprestado" {% if request.GET.status == 'emprestado' %}selected{% endif %}>Emprestados</option>
+        </select>
+        <button type="submit">Filtrar</button>
+        <a href="{% url 'lista' %}" class="btn-limpar">Limpar</a>
+    </form>
+
     <ul>
         {% for livro in livros %}
             <li>
@@ -16,7 +28,11 @@
                 <a href="{% url 'excluir' livro.pk %}">Excluir</a>
             </li>
         {% empty %}
-            <li>Nenhum livro cadastrado.</li>
+            {% if tem_filtro %}
+                <li>Nenhum livro encontrado para os filtros aplicados.</li>
+            {% else %}
+                <li>Nenhum livro cadastrado.</li>
+            {% endif %}
         {% endfor %}
     </ul>
 
