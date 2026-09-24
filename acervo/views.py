@@ -5,7 +5,17 @@ from .models import Livro
 from .forms import LivroForm
 
 def inicio(request):
-    return HttpResponse('Olá, acervo!')
+    total_livros = Livro.objects.count()
+    livros_disponiveis = Livro.objects.filter(disponivel=True).count()
+    livros_emprestados = Livro.objects.filter(disponivel=False).count()
+    return render(
+        request, 'acervo/inicio.html',
+        {
+            'total_livros': total_livros,
+            'livros_disponiveis': livros_disponiveis,
+            'livros_emprestados': livros_emprestados,
+        }
+    )
 
 
 def lista_livros(request):

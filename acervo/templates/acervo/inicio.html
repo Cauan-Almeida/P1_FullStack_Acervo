@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    <h2>Bem-vindo à Biblioteca</h2>
+    <p>Sistema de gerenciamento e controle do acervo de livros.</p>
+
+    <div class="painel-resumo">
+        <p>📚 <strong>Total de Livros:</strong> {{ total_livros }}</p>
+        <p>✅ <strong>Disponíveis para Empréstimo:</strong> {{ livros_disponiveis }}</p>
+        <p>📖 <strong>Emprestados:</strong> {{ livros_emprestados }}</p>
+    </div>
+
+    <div class="acoes-home">
+        <a href="{% url 'lista' %}" class="btn-acao">Consultar Acervo</a>
+        <a href="{% url 'cadastrar' %}" class="btn-acao btn-secundario">Cadastrar Novo Livro</a>
+    </div>
+{% endblock %}
+
