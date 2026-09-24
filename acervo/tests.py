@@ -1,11 +1,9 @@
-from django.test import TestCase
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
 from .models import Livro
 from .forms import LivroForm
 
-# Create your tests here.
 class LivroTests(TestCase):
     def setUp(self):
         self.client = Client()
